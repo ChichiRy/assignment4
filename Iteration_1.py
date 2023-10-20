@@ -1,17 +1,13 @@
 summation = 0
-
-# Grading system welcome message
-print("\n\nMitihani Grading System. Welcome user.")
-
-# Ask for input for each of the marks
-print("Please enter the following marks: ")
-
 # Dictionary to store subject, mark/total, grade values
 marks = {"Mathematics": [],
          "Physics": [],
          "Geography": [],
          "Chemistry": [],
          }
+
+# Grading system welcome message and Ask for input for each of the marks
+print("\n\nMitihani Grading System. Welcome user.\nPlease enter the following marks: ")
 
 for key in marks.keys():
     entered_val = -1
@@ -20,12 +16,11 @@ for key in marks.keys():
             entered_val = int(input(f"  - {str(key)}: "))
             # Request user for acceptable value
             print("Unexpected value (Mark >100/<0). Please enter a proper value.\n") if 0 > entered_val > 100 else print("Success!\n")
-            marks[key].append(entered_val)
-            summation += entered_val  # Line adds entered mark to a total to determine the average
         except ValueError:
             entered_val = -1
             print('Invalid input. Please enter numbers only.')
-
+    marks[key].append(entered_val)
+    summation += entered_val  # Line adds entered mark to a total to determine the average
 marks["Average"] = [(summation/4), ]  # Determines the average mark
 
 # Determine grade to be stored in mark. mark["subject"]:[value, "grade"]
