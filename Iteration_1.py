@@ -6,51 +6,27 @@ print("\n\nMitihani Grading System. Welcome user.")
 # Ask for input for each of the marks
 print("Please enter the following marks: ")
 
-maths = int(input("  - Mathematics: "))
-if maths > 100 or maths < 0:
-    while maths > 100 or maths < 0:  # Loop keeps running until a valid value is put in
-        #  Request user for acceptable value
-        print("Unexpected value (Mark >100/<0). Please enter a proper value.\n")
-        maths = int(input("  - Mathematics: "))
-else:
-    pass
-summation += maths  # Line adds entered mark to a total to determine the average
-
-physics = int(input("  - Physics: "))
-if physics > 100 or physics < 0:
-    while physics > 100 or physics < 0:
-        print("Unrecognised mark (Mark >100/<0). Please enter a proper value.\n")
-        physics = int(input("  - Physics: "))
-else:
-    pass
-summation += physics
-
-geo = int(input("  - Geography: "))
-if geo > 100 or geo < 0:
-    while geo > 100 or geo < 0:
-        print("Unexpected value (Mark >100/<0). Please enter a proper value.\n")
-        geo = int(input("  - Geography: "))
-else:
-    pass
-summation += geo
-
-chem = int(input("  - Chemistry: "))
-if chem > 100 or chem < 0:
-    while chem > 100 or chem < 0:
-        print("Unexpected value (Mark >100/<0). Please enter a proper value.\n")
-        chem = int(input("  - Chemistry: "))
-else:
-    pass
-summation += chem
-
-average = summation / 4  # Determines the average mark
-
 # Dictionary to store subject, mark/total, grade values
-marks = {"maths": [maths, ],
-         "physics": [physics, ],
-         "geo": [geo, ],
-         "chem": [chem, ],
-         "Average": [average, ]}
+marks = {"Mathematics": [],
+         "Physics": [],
+         "Geography": [],
+         "Chemistry": [],
+         }
+
+for key in marks.keys():
+    entered_val = -1
+    while entered_val > 100 or entered_val < 0:  # Loop keeps running until a valid value is put in
+        try:
+            entered_val = int(input(f"  - {str(key)}: "))
+            # Request user for acceptable value
+            print("Unexpected value (Mark >100/<0). Please enter a proper value.\n") if 0 > entered_val > 100 else print("Success!\n")
+            marks[key].append(entered_val)
+            summation += entered_val  # Line adds entered mark to a total to determine the average
+        except ValueError:
+            entered_val = -1
+            print('Invalid input. Please enter numbers only.')
+
+marks["Average"] = [(summation/4), ]  # Determines the average mark
 
 # Determine grade to be stored in mark. mark["subject"]:[value, "grade"]
 for key in marks.keys():
@@ -63,10 +39,5 @@ for key in marks.keys():
     else:
         marks[key].append("D")
 
-
-print(f"\n\n\nOverall grades are:"
-      f"\n  - Mathematics:\t {(marks['maths'][0] if len(str(marks['maths'][0])) > 1 else '0' + str(marks['maths'][0]))}\t\t{marks['maths'][1]}"
-      f"\n  - Physics:\t\t {(marks['physics'][0] if len(str(marks['physics'][0])) > 1 else '0' + str(marks['physics'][0]))}\t\t{marks['physics'][1]}"
-      f"\n  - Geography:\t\t {(marks['geo'][0] if len(str(marks['geo'][0])) > 1 else '0' + str(marks['geo'][0]))}\t\t{marks['geo'][1]}"
-      f"\n  - Chemistry:\t\t {(marks['chem'][0] if len(str(marks['chem'][0])) > 1 else '0' + str(marks['chem'][0]))}\t\t{marks['chem'][1]}"
-      f"\n  * Average grade:\t\t\t{marks['Average'][1]}")
+print(f"\n\n\nOverall grades are:")
+print(''.join([f"  - {str(key)}: {(marks[key][0] if len(str(marks[key][0])) > 1 else '0' + str(marks[key][0]))}\t\t{marks[key][1]}\n" for key in marks.keys()]))
